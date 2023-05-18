@@ -19,28 +19,28 @@
   <script>
     // Récupérer le nom du Pokémon à partir des paramètres de requête
     const urlParams = new URLSearchParams(window.location.search);
-    const pokemonName = urlParams.get('search');
+    const pokemonName = urlParams.get('pokemonName');
 
-    // Exemple de données du Pokémon
-    const pokemonData = {
-      name: "Pikachu",
-      number: "025",
-      type: "Electric",
-      image: "https://example.com/pikachu.jpg"
-    };
+    // Faire une requête pour récupérer les informations du Pokémon
+    fetch(`https://api.example.com/pokemon/${pokemonName}`)
+      .then(response => response.json())
+      .then(data => {
+        // Afficher les informations du Pokémon
+        const pokemonImageElement = document.getElementById('pokemon-image');
+        pokemonImageElement.innerHTML = `<img src="${data.image}" alt="${data.name}">`;
 
-    // Afficher les informations du Pokémon
-    const pokemonImageElement = document.getElementById('pokemon-image');
-    pokemonImageElement.innerHTML = `<img src="${pokemonData.image}" alt="${pokemonData.name}">`;
+        const pokemonNameElement = document.getElementById('pokemon-name');
+        pokemonNameElement.textContent = data.name;
 
-    const pokemonNameElement = document.getElementById('pokemon-name');
-    pokemonNameElement.textContent = pokemonData.name;
+        const pokemonNumberElement = document.getElementById('pokemon-number');
+        pokemonNumberElement.textContent = `Number: ${data.number}`;
 
-    const pokemonNumberElement = document.getElementById('pokemon-number');
-    pokemonNumberElement.textContent = `Number: ${pokemonData.number}`;
-
-    const pokemonTypeElement = document.getElementById('pokemon-type');
-    pokemonTypeElement.textContent = `Type: ${pokemonData.type}`;
+        const pokemonTypeElement = document.getElementById('pokemon-type');
+        pokemonTypeElement.textContent = `Type: ${data.type}`;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   </script>
 </body>
 </html>

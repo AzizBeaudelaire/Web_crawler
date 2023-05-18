@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pokemon Details</title>
+</head>
+<body>
+  <h1>Pokemon Details</h1>
+
+  <div id="pokemon-details">
+    <div id="pokemon-image"></div>
+    <div id="pokemon-info">
+      <h2 id="pokemon-name"></h2>
+      <p id="pokemon-number"></p>
+      <p id="pokemon-type"></p>
+    </div>
+  </div>
+
+  <script>
+    // Récupérer le nom du Pokémon à partir des paramètres de requête
+    const urlParams = new URLSearchParams(window.location.search);
+    const pokemonName = urlParams.get('search');
+
+    // Exemple de données du Pokémon
+    const pokemonData = {
+      name: "Pikachu",
+      number: "025",
+      type: "Electric",
+      image: "https://example.com/pikachu.jpg"
+    };
+
+    // Afficher les informations du Pokémon
+    const pokemonImageElement = document.getElementById('pokemon-image');
+    pokemonImageElement.innerHTML = `<img src="${pokemonData.image}" alt="${pokemonData.name}">`;
+
+    const pokemonNameElement = document.getElementById('pokemon-name');
+    pokemonNameElement.textContent = pokemonData.name;
+
+    const pokemonNumberElement = document.getElementById('pokemon-number');
+    pokemonNumberElement.textContent = `Number: ${pokemonData.number}`;
+
+    const pokemonTypeElement = document.getElementById('pokemon-type');
+    pokemonTypeElement.textContent = `Type: ${pokemonData.type}`;
+  </script>
+</body>
+</html>

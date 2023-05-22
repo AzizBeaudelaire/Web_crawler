@@ -3,49 +3,50 @@ const cors = require('cors');
 const puppeteer = require('puppeteer');
 
 const app = express();
-const port = 8080;
+const port = 3000;
 
 app.use(cors());
 
-async function scrapePokemon() {
-  const browser = await puppeteer.launch({ headless: "new" });
-  const page = await browser.newPage();
-  await page.goto('https://www.pokepedia.fr/Liste_des_Pok%C3%A9mon_dans_l%27ordre_du_Pok%C3%A9dex_National');
+async function scrapePokemonDetails(pokemonURL) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(pokemonURL);
 
-  const pokemonData = await page.evaluate(() => {
-    const pokemonList = [];
-    const rows = document.querySelectorAll('#Liste_des_Pokémon_dans_lordre_du_Pokédex_National tr:not(:first-child)');
-    rows.forEach(row => {
-      const data = {};
-      const columns = row.querySelectorAll('td');
+    const pokemonData = await page.evaluate(() => {
+        const data = {};
 
-      data['numero'] = columns[0].textContent.trim();
-      data['nom'] = columns[1].textContent.trim();
-      data['types'] = columns[2].textContent.trim().split(' / ');
-      data['total'] = parseInt(columns[3].textContent.trim(), 10);
-      data['pv'] = parseInt(columns[4].textContent.trim(), 10);
-      data['attaque'] = parseInt(columns[5].textContent.trim(), 10);
-      data['defense'] = parseInt(columns[6].textContent.trim(), 10);
-      data['attaque_spe'] = parseInt(columns[7].textContent.trim(), 10);
-      data['defense_spe'] = parseInt(columns[8].textContent.trim(), 10);
-      data['vitesse'] = parseInt(columns[9].textContent.trim(), 10);
+        data['numero'] = document.querySelector('.block-pokemon-detail-id').textContent.trim();
+        data['nom'] = document.querySelector('.block-pokemon-detail-title').textContent.trim();
+        data['types'] = Array.from(document.querySelectorAll('.block-pokemon-detail-types a')).map(typeElement => typeElement.textContent.trim());
+        data['taille'] = document.querySelector('.block-pokemon-detail-data-list').children[0].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['poids'] = document.querySelector('.block-pokemon-detail-data-list').children[1].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['pv'] = document.querySelector('.block-pokemon-detail-data-list').children[2].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['attaque'] = document.querySelector('.block-pokemon-detail-data-list').children[3].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['defense'] = document.querySelector('.block-pokemon-detail-data-list').children[4].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['attaque_spe'] = document.querySelector('.block-pokemon-detail-data-list').children[5].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['defense_spe'] = document.querySelector('.block-pokemon-detail-data-list').children[6].querySelector('.block-pokemon-detail-data-value').textContent.trim();
+        data['vitesse'] = document.querySelector('.block-pokemon-detail-data-list').children[7].querySelector('.block-pokemon-detail-data-value').textContent.trim();
 
-      pokemonList.push(data);
+        return data;
     });
 
-    return pokemonList;
-  });
+    await browser.close();
 
-  await browser.close();
-
-  return pokemonData;
+    return pokemonData;
 }
 
-app.get('/', async (req, res) => {
-  const pokemonData = await scrapePokemon();
-  res.json(pokemonData);
+app.get('/pokemon', async (req, res) => {
+    const pokemonName = req.query.search;
+    const pokemonURL = `https://eternia.fr/fr/pokedex/liste-pokemon/${pokemonName}`;
+
+    try {
+      const pokemonData = await scrapePokemonDetails(pokemonURL);
+      res.json(pokemonData);
+    } catch (error) {
+    res.status(500).json({ error: 'An error occurred while scraping the Pokémon data.' });
+    }
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });

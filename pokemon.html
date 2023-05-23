@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Pokemon Details</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Pokemon Details</h1>
@@ -13,6 +14,14 @@
       <h2 id="pokemon-name"></h2>
       <p id="pokemon-number"></p>
       <p id="pokemon-type"></p>
+      <p id="pokemon-height"></p>
+      <p id="pokemon-weight"></p>
+      <p id="pokemon-hp"></p>
+      <p id="pokemon-attack"></p>
+      <p id="pokemon-defense"></p>
+      <p id="pokemon-sp-atk"></p>
+      <p id="pokemon-sp-def"></p>
+      <p id="pokemon-speed"></p>
     </div>
   </div>
 
@@ -22,7 +31,7 @@
     const pokemonName = urlParams.get('pokemonName');
 
     // Faire une requête pour récupérer les informations du Pokémon
-    fetch(`https://api.example.com/pokemon/${pokemonName}`)
+    fetch(`http://localhost:8080/pokemon/${pokemonName}`)
       .then(response => response.json())
       .then(data => {
         // Afficher les informations du Pokémon
@@ -37,6 +46,30 @@
 
         const pokemonTypeElement = document.getElementById('pokemon-type');
         pokemonTypeElement.textContent = `Type: ${data.type}`;
+
+        const pokemonHeightElement = document.getElementById('pokemon-height');
+        pokemonHeightElement.textContent = `Height: ${data.height} m`;
+
+        const pokemonWeightElement = document.getElementById('pokemon-weight');
+        pokemonWeightElement.textContent = `Weight: ${data.weight} kg`;
+
+        const pokemonHpElement = document.getElementById('pokemon-hp');
+        pokemonHpElement.textContent = `HP: ${data.hp}`;
+
+        const pokemonAttackElement = document.getElementById('pokemon-attack');
+        pokemonAttackElement.textContent = `Attack: ${data.attack}`;
+
+        const pokemonDefenseElement = document.getElementById('pokemon-defense');
+        pokemonDefenseElement.textContent = `Defense: ${data.defense}`;
+
+        const pokemonSpAtkElement = document.getElementById('pokemon-sp-atk');
+        pokemonSpAtkElement.textContent = `Special Attack: ${data.spAtk}`;
+
+        const pokemonSpDefElement = document.getElementById('pokemon-sp-def');
+        pokemonSpDefElement.textContent = `Special Defense: ${data.spDef}`;
+
+        const pokemonSpeedElement = document.getElementById('pokemon-speed');
+        pokemonSpeedElement.textContent = `Speed: ${data.speed}`;
       })
       .catch(error => {
         console.error('Error:', error);

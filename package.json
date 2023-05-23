@@ -1,6 +1,19 @@
 {
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
-    "puppeteer": "^20.1.2"
-  }
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "puppeteer": "^20.2.0",
+    "puppeteer-core": "^20.2.1"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "web-crawler",
+  "description": "We have create a web crawler for the ynov project. Language : js Node.js Pupeeters",
+  "version": "1.0.0",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

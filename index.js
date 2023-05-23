@@ -1,52 +1,74 @@
 const express = require('express');
-const cors = require('cors');
 const puppeteer = require('puppeteer');
 
 const app = express();
-const port = 3000;
+const port = 8080;
 
-app.use(cors());
+app.get('/', async (req, res) => {
+  const searchTerm = req.query.search;
+  
+  if (!searchTerm) {
+    res.send('Please provide a search term.');
+    return;
+  }
 
-async function scrapePokemonDetails(pokemonURL) {
+  try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(pokemonURL);
 
-    const pokemonData = await page.evaluate(() => {
-        const data = {};
-
-        data['numero'] = document.querySelector('.block-pokemon-detail-id').textContent.trim();
-        data['nom'] = document.querySelector('.block-pokemon-detail-title').textContent.trim();
-        data['types'] = Array.from(document.querySelectorAll('.block-pokemon-detail-types a')).map(typeElement => typeElement.textContent.trim());
-        data['taille'] = document.querySelector('.block-pokemon-detail-data-list').children[0].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['poids'] = document.querySelector('.block-pokemon-detail-data-list').children[1].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['pv'] = document.querySelector('.block-pokemon-detail-data-list').children[2].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['attaque'] = document.querySelector('.block-pokemon-detail-data-list').children[3].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['defense'] = document.querySelector('.block-pokemon-detail-data-list').children[4].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['attaque_spe'] = document.querySelector('.block-pokemon-detail-data-list').children[5].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['defense_spe'] = document.querySelector('.block-pokemon-detail-data-list').children[6].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-        data['vitesse'] = document.querySelector('.block-pokemon-detail-data-list').children[7].querySelector('.block-pokemon-detail-data-value').textContent.trim();
-
-        return data;
+    await page.goto(`https://eternia.fr/fr/pokedex/liste-pokemon/`);
+    await page.waitForSelector('.liste_pokemon');
+    
+    const links = await page.$$eval('.liste_pokemon a', (anchors) => {
+      return anchors.map((anchor) => anchor.href);
     });
+
+    const pokemonData = [];
+    
+    for (const link of links) {
+      await page.goto(link);
+      await page.waitForSelector('.content_fiche');
+      
+      const data = await page.evaluate(() => {
+        const number = document.querySelector('.fiche_titre span').innerText;
+        const name = document.querySelector('.fiche_titre h1').innerText;
+        const types = Array.from(document.querySelectorAll('.fiche_texte .type')).map((type) => type.innerText);
+        const height = document.querySelector('.fiche_texte .taille strong').innerText;
+        const weight = document.querySelector('.fiche_texte .poids strong').innerText;
+        const hp = document.querySelector('.fiche_texte .statistiques .pv strong').innerText;
+        const attack = document.querySelector('.fiche_texte .statistiques .attaque strong').innerText;
+        const defense = document.querySelector('.fiche_texte .statistiques .defense strong').innerText;
+        const spAttack = document.querySelector('.fiche_texte .statistiques .attaque_spe strong').innerText;
+        const spDefense = document.querySelector('.fiche_texte .statistiques .defense_spe strong').innerText;
+        const speed = document.querySelector('.fiche_texte .statistiques .vitesse strong').innerText;
+
+        return {
+          number,
+          name,
+          types,
+          height,
+          weight,
+          hp,
+          attack,
+          defense,
+          spAttack,
+          spDefense,
+          speed
+        };
+      });
+
+      pokemonData.push(data);
+    }
 
     await browser.close();
 
-    return pokemonData;
-}
-
-app.get('/pokemon', async (req, res) => {
-    const pokemonName = req.query.search;
-    const pokemonURL = `https://eternia.fr/fr/pokedex/liste-pokemon/${pokemonName}`;
-
-    try {
-      const pokemonData = await scrapePokemonDetails(pokemonURL);
-      res.json(pokemonData);
-    } catch (error) {
-    res.status(500).json({ error: 'An error occurred while scraping the Pokémon data.' });
-    }
+    res.json(pokemonData);
+  } catch (error) {
+    console.error('An error occurred:', error);
+    res.status(500).send('An error occurred');
+  }
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+  console.log(`Server is running on http://localhost:${port}/`);
 });

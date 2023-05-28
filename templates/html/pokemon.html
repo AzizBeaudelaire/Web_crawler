@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pokemon Details</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <h1>Pokemon Details</h1>
+
+  <div id="pokemon-details">
+    <div id="pokemon-image"></div>
+    <div id="pokemon-info">
+      <h2 id="pokemon-name"></h2>
+      <p id="pokemon-number"></p>
+      <p id="pokemon-type"></p>
+      <p id="pokemon-height"></p>
+      <p id="pokemon-weight"></p>
+      <p id="pokemon-hp"></p>
+      <p id="pokemon-attack"></p>
+      <p id="pokemon-defense"></p>
+      <p id="pokemon-sp-atk"></p>
+      <p id="pokemon-sp-def"></p>
+      <p id="pokemon-speed"></p>
+    </div>
+  </div>
+
+<!--  <script>-->
+<!--    // Récupérer le nom du Pokémon à partir des paramètres de requête-->
+<!--    const urlParams = new URLSearchParams(window.location.search);-->
+<!--    const pokemonName = urlParams.get('pokemonName');-->
+
+<!--    // Faire une requête pour récupérer les informations du Pokémon-->
+<!--    // fetch(`http://localhost:8080/pokemon/${pokemonName}`)-->
+<!--    fetch(`http://localhost:8080/api`)-->
+<!--      .then(response => response.json())-->
+<!--      .then(data => {-->
+<!--        // Afficher les informations du Pokémon-->
+<!--        const pokemonImageElement = document.getElementById('pokemon-image');-->
+<!--        pokemonImageElement.innerHTML = `<img src="${data.image}" alt="${data.name}">`;-->
+
+<!--        const pokemonNameElement = document.getElementById('pokemon-name');-->
+<!--        pokemonNameElement.textContent = data.name;-->
+
+<!--        const pokemonNumberElement = document.getElementById('pokemon-number');-->
+<!--        pokemonNumberElement.textContent = `Number: ${data.number}`;-->
+
+<!--        const pokemonTypeElement = document.getElementById('pokemon-type');-->
+<!--        pokemonTypeElement.textContent = `Type: ${data.types}`;-->
+
+<!--        const pokemonHeightElement = document.getElementById('pokemon-height');-->
+<!--        pokemonHeightElement.textContent = `Height: ${data.height}`;-->
+
+<!--        const pokemonWeightElement = document.getElementById('pokemon-weight');-->
+<!--        pokemonWeightElement.textContent = `Weight: ${data.weight}`;-->
+
+<!--        const pokemonHpElement = document.getElementById('pokemon-hp');-->
+<!--        pokemonHpElement.textContent = `HP: ${data.hp}`;-->
+
+<!--        const pokemonAttackElement = document.getElementById('pokemon-attack');-->
+<!--        pokemonAttackElement.textContent = `Attack: ${data.attack}`;-->
+
+<!--        const pokemonDefenseElement = document.getElementById('pokemon-defense');-->
+<!--        pokemonDefenseElement.textContent = `Defense: ${data.defense}`;-->
+
+<!--        const pokemonSpAtkElement = document.getElementById('pokemon-sp-atk');-->
+<!--        pokemonSpAtkElement.textContent = `Special Attack: ${data.spAttack}`;-->
+
+<!--        const pokemonSpDefElement = document.getElementById('pokemon-sp-def');-->
+<!--        pokemonSpDefElement.textContent = `Special Defense: ${data.spDefense}`;-->
+
+<!--        const pokemonSpeedElement = document.getElementById('pokemon-speed');-->
+<!--        pokemonSpeedElement.textContent = `Speed: ${data.speed}`;-->
+<!--      })-->
+<!--      .catch(error => {-->
+<!--        console.error('Error:', error);-->
+<!--      });-->
+<!--  </script>-->
+  <script src="../script/script.js"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ const path = require('path');
 
 const app = express();
 const port = 8080;
-const listePokemon = ["bulbizarre","herbizarre","florizarre","salameche","reptincel","dracaufeu","carapuce","carabaffe","tortank","chenipan","chrysacier","papilusion","aspicot","coconfort","dardargnan","roucool","roucoups","roucarnage","rattata","rattatac","piafabec","rapasdepic","abo","arbok","pikachu","raichu","sabelette","sablaireau","nidoran","nidorina","nidoqueen","nirodan","nidorino","nidoking","melofee","melodelfe","goupix","feunard","rondoudou","grodoudou","nosferapti","nosferalto","mystherbe","ortide","rafflesia","paras","parasect","mimitoss","aeromite","taupiqueur","triopikeur","miaouss","persian","psykokwak","akwakwak","ferosinge","colossinge","caninos","arcanin","ptitard","tetarte","tartard","abra","kadabra","alakazam","machoc","machopeur","mackogneur","chetiflor","boustiflor","empiflor","tentacool","tentacruel","racaillou","gravalanch","grolem","ponyta","galopa","ramoloss","flagadoss","magneti","magneton","canarticho","doduo","dodrio","otaria","lamantine","tadmorv","grotadmorv","kokiyas","crustabri","fantominus","spectrum","ectoplasma","onix","soporifik","hypnomade","krabby","krabboss","voltorbe","electrode","noeunoeuf","noadkoko","osselait","ossatueur","kicklee","tygnon","excelangue","smogo","smogogo","rhinocorne","rhinoferos","leveinard","saquedeneu","kangourex","hypotrempe","hypocean","poissirene","poissoroy","stari","staross","mime","insecateur","lippoutou","elektek","magmar","scarabrute","tauros","magicarpe","leviator","lokhlass","metamorph","evoli","aquali","voltali","pyroli","porygon","amonita","amonistar","kabuto","kabutops","ptera","ronflex","artikodin","electhor","sulfura","minidraco","draco","dracolosse"]
+const listPokemon = ["bulbizarre","herbizarre","florizarre","salameche","reptincel","dracaufeu","carapuce","carabaffe","tortank","chenipan","chrysacier","papilusion","aspicot","coconfort","dardargnan","roucool","roucoups","roucarnage","rattata","rattatac","piafabec","rapasdepic","abo","arbok","pikachu","raichu","sabelette","sablaireau","nidoran","nidorina","nidoqueen","nirodan","nidorino","nidoking","melofee","melodelfe","goupix","feunard","rondoudou","grodoudou","nosferapti","nosferalto","mystherbe","ortide","rafflesia","paras","parasect","mimitoss","aeromite","taupiqueur","triopikeur","miaouss","persian","psykokwak","akwakwak","ferosinge","colossinge","caninos","arcanin","ptitard","tetarte","tartard","abra","kadabra","alakazam","machoc","machopeur","mackogneur","chetiflor","boustiflor","empiflor","tentacool","tentacruel","racaillou","gravalanch","grolem","ponyta","galopa","ramoloss","flagadoss","magneti","magneton","canarticho","doduo","dodrio","otaria","lamantine","tadmorv","grotadmorv","kokiyas","crustabri","fantominus","spectrum","ectoplasma","onix","soporifik","hypnomade","krabby","krabboss","voltorbe","electrode","noeunoeuf","noadkoko","osselait","ossatueur","kicklee","tygnon","excelangue","smogo","smogogo","rhinocorne","rhinoferos","leveinard","saquedeneu","kangourex","hypotrempe","hypocean","poissirene","poissoroy","stari","staross","mime","insecateur","lippoutou","elektek","magmar","scarabrute","tauros","magicarpe","leviator","lokhlass","metamorph","evoli","aquali","voltali","pyroli","porygon","amonita","amonistar","kabuto","kabutops","ptera","ronflex","artikodin","electhor","sulfura","minidraco","draco","dracolosse"]
 
 app.use(express.static(path.join(__dirname, '/templates')));
 
@@ -12,8 +12,8 @@ app.use(express.static(path.join(__dirname, '/templates')));
 app.get('/api/:pokemonId', async (req, res) => {
   const pokemonId = req.params.pokemonId;
   let i = 0;
-  for(i; i < listePokemon.length - 1; i++) {
-    if(pokemonId.toLowerCase() === listePokemon[i].toLowerCase()) {
+  for(i; i < listPokemon.length - 1; i++) {
+    if(pokemonId.toLowerCase() === listPokemon[i].toLowerCase()) {
       break;
     }
   };

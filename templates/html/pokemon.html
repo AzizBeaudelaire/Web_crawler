@@ -6,11 +6,11 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-  <h1>Pokemon Details</h1>
+  <h1>Poké-finder</h1>
 
-  <div id="pokemon-details">
-    <div id="pokemon-image"></div>
-    <div id="pokemon-info">
+  <div id="pokemon-details" style=" justify-content: center; display: flex; flex-wrap: wrap;">
+    <div id="pokemon-pic"></div>
+    <div id="pokemon-info" style="color: white">
       <h2 id="pokemon-name"></h2>
       <p id="pokemon-number"></p>
       <p id="pokemon-type"></p>
@@ -33,7 +33,7 @@
      .then(response => response.json())
      .then(data => {
        // Afficher les informations du Pokémon
-       const pokemonImageElement = document.getElementById('pokemon-image');
+       const pokemonImageElement = document.getElementById('pokemon-pic');
        pokemonImageElement.innerHTML = `<img src="${data.image}" alt="${data.name}">`;       const pokemonNameElement = document.getElementById('pokemon-name');
        pokemonNameElement.textContent = data.name.split(" ")[3].split("\n")[0];
         const pokemonNumberElement = document.getElementById('pokemon-number');

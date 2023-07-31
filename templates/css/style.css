@@ -1,16 +1,20 @@
 body {
-	background-image: url("https://wallpapercave.com/wp/uUZKv0v.jpg");
+	background-image: url("https://images.alphacoders.com/119/119151.jpg");
 	background-size: auto;
-	background-position: center;
-	border: 5px solid yellow;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
 }
-  
+
 header {
 	background-color: #ffffff;
 	padding: 20px;
 	text-align: center;
 }
-  
+
+input{
+justify-content: center;
+}
 .logo img {
 	height: 100px;
 }
@@ -24,7 +28,12 @@ header {
 	font-size: 20px;
 	margin-bottom: 20px;
 }
-  
+
+main {
+	width: 100vw;
+	height: 100vh;
+}
+
 .search-form {
 	display: flex;
 	align-items: center;
@@ -61,7 +70,11 @@ header {
 .results {
 	text-align: center;
 }
-  
+
+button[type="submit"]:hover {
+	background-color: #ccc;
+}
+
 footer {
 	background-color: #333;
 	color: #fff;
